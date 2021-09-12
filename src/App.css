@@ -49,3 +49,16 @@
   height: 400px;
   float: left;
 }
+
+th, td {
+  text-align: left;
+  padding: 5px;
+}
+
+th {
+  background-color: orange;
+
+}
+tr:nth-child(even) {
+  background-color: #f2f2f2
+}

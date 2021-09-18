@@ -1,13 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import DigitalWatch from './DigitalWatch';
+import Helpit from './Helpit';
+//import Md5Salaus from './Md5Salaus';
 
 class Viesti extends Component {
     render() {
-        return(
+        return (
             <p>
                 Tässä on oma vakioviesti
-            </p>            
+            </p>
         );
     }
 }
@@ -15,33 +17,64 @@ class Viesti extends Component {
 class ViestiPrp extends Component {
     render() {
         console.log(this.props.autonMalli);
-        return(
+        return (
             <>
                 <p>{this.props.kukkaruukku}</p>
-                <p>{this.props.viesti}</p>            
+                <p>{this.props.viesti}</p>
             </>
         );
-        
+
     }
 }
 
 class Viestit extends Component {
-  render() {
-    return (<div>
-        <div className="Viestit">
-            <header className="Viestit-header">
-                <h3>Viestit-sovellusikkuna</h3>
-            </header>
-        </div>
-        <div>
-            <p>Tässä alapuolella luetellaan viestejä</p>
-            <Viesti />
-            <ViestiPrp viesti="Viesti nro 1" kukkaruukku="Belargonia" autonMalli="V90"/>
-            <DigitalWatch />
-        </div>     
-    </div>
-    );
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            showhelp: "hide"
+        };
+    }
+
+    handleClickHelp = (event) => {
+        let status = this.state.showhelp;
+        if (status === "show") {
+            status = "hide"
+        } else {
+            status = "show"
+        }
+        this.setState({
+            showhelp: status
+        })
+    }
+
+    render() {
+        console.log(this.state.showhelp);
+        if (this.state.showhelp === "show") {
+            return (
+                <div>
+                    <Helpit moduli="viestit" />
+                    <button onClick={this.handleClickHelp}>Piilota opaste</button>
+                </div>)
+        } else {
+            return (
+                <div>
+                    <div className="Viestit">
+                        <header className="Viestit-header">
+                            <h3>Viestit-sovellusikkuna</h3>
+                        </header>
+                    </div>
+                    <div>
+                        <p>Tässä alapuolella luetellaan viestejä</p>
+                        <button onClick={this.handleClickHelp}>Näytä opaste</button>
+
+                        <Viesti />
+                        <ViestiPrp viesti="Viesti nro 1" kukkaruukku="Belargonia" autonMalli="V90" />
+                        <DigitalWatch />
+                    </div>
+                </div>
+            );
+        }
+    }
 }
 
 export default Viestit;

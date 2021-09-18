@@ -14,6 +14,13 @@ class Helpit extends Component {
                     <p>Minäpä kerron miten AnalogWatch-ohjelmaa käytetään...</p>  
                 </div>          
             );
+        }
+        else if (this.props.moduli==="NWCustomerFetch") {
+            return(
+                <div>
+                    <p>Voit hakea asiakkaita sekä muokata heitä</p>  
+                </div>          
+            );
         } else {
             return(
                 <div>

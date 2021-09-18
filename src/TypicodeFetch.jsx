@@ -6,12 +6,9 @@ class TypicodeFetch extends Component {
     constructor(props) {
         super(props);
         console.log("TypicodeFetch: Constructor");
-        this.state = {
-            todos: [],
-            recordcount: 0,
-            start: 0,
-            end: 10
-        };
+        this.state = {todos: [], recordcount: 0, start: 0, end: 10, page: 1, limit: 10, userId: "" }; //state-määrityksen voi tehdä yhdelle riville tai monelle
+        //input-kentän onChange-kuuntelijan funktio sidotaan itseensä 
+        this.handleChangeUserId = this.handleChangeUserId.bind(this);
     }
 
     componentDidMount() {
@@ -19,29 +16,40 @@ class TypicodeFetch extends Component {
         this.HaeTypicodesta();
     } 
 
-    handleClickPrev = (event) => {
-        let startvalue = this.state.start;
-        if (startvalue > 0) {
-            startvalue = startvalue-10;
+    handleClickPrev = () => {
+        let pagenumber = this.state.page;
+        if (pagenumber > 0) {
+            pagenumber = pagenumber-1;
         }
         this.setState({
-            start: startvalue,
-            end: startvalue+10
-        });
-        this.HaeTypicodesta();
+            page: pagenumber,
+        },this.handleSubmit);
     }
 
-    handleClickNext = (event) => {
+    handleClickNext = () => {
         this.setState({
-            start: this.state.start+10,
-            end: this.state.end+10
-        });
+            page: this.state.page+1,
+        },this.handleSubmit);
+    }
+
+    handleChangeUserId(event) { 
+        let arvo = event.target.value;
+        this.setState({userId: arvo},this.handleSubmit);
+    }
+
+    handleSubmit(event) {
+        console.log('TypicodeFetch: . . . . handleSubmitissa');
         this.HaeTypicodesta();
     }
 
     HaeTypicodesta() {
-        //let uri = 'https://jsonplaceholder.typicode.com/todos';
-        let uri = 'https://jsonplaceholder.typicode.com/todos?_start='+this.state.start+'&_end='+this.state.end;
+        //let uri = 'https://jsonplaceholder.typicode.com/todos'; //haku ilman rajoituksia
+        let uri="";
+        if (this.state.userId !== "") {
+            uri = 'https://jsonplaceholder.typicode.com/todos?userId='+this.state.userId+'&_page='+this.state.page+'&_limit='+this.state.limit;
+        } else {
+            uri = 'https://jsonplaceholder.typicode.com/todos?_page='+this.state.page+'&_limit='+this.state.limit;
+        }
         console.log("HaeTypicodesta " + uri);
         fetch(uri)
             .then(response => response.json())
@@ -58,7 +66,6 @@ class TypicodeFetch extends Component {
     render() {
         console.log("TypicodeFetch: renderissä");
         let viesti = "Rivejä " + this.state.recordcount;
-
         let taulukko = [];
         if (this.state.todos.length > 0) {
           for (let index = 0; index < this.state.todos.length; index++) {
@@ -76,8 +83,9 @@ class TypicodeFetch extends Component {
         }
 
         return (
-        <div className="App">
+        <div className="box4">
             <h3>{viesti}</h3>
+            <input type="text" placeholder="Limit with userId" value={this.state.userId} onChange={this.handleChangeUserId} /> 
             <button onClick={this.handleClickPrev}>Edelliset</button>
             <button onClick={this.handleClickNext}>Seuraavat</button>
             <table id="t01"><tbody>{taulukko}</tbody></table>

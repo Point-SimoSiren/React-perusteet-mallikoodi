@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import './App.css';
 import Clock from 'react-clock';
 import Helpit from './Helpit';
-import 'react-clock/dist/Clock.css' // Tämä tarvitaan nykyään!
+
 
 class AnalogWatch extends Component {
     constructor(props) {
@@ -32,12 +32,11 @@ class AnalogWatch extends Component {
     render() {
         console.log("AnalogWatch: tultiin render-metodiin");
         return (
-            <div className="digitaalikello">
-                <Helpit moduli="AnalogWatch" />
-                <Clock value={this.state.pvm} size={100} hourMarksLength={20} />
+            <div className="analogikello">
+                <Clock value={this.state.pvm} size={500} hourMarksLength={20} />
             </div>
-        );
-    }
+    );
+  }
 }
 
 export default AnalogWatch;

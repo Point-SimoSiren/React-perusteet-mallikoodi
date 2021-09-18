@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import DigitalWatch from './DigitalWatch';
 import Helpit from './Helpit';
-import Md5Salaus from './Md5Salaus';
+//import Md5Salaus from './Md5Salaus';
 
 class Viesti extends Component {
     render() {
@@ -66,7 +66,7 @@ class Viestit extends Component {
                     <div>
                         <p>Tässä alapuolella luetellaan viestejä</p>
                         <button onClick={this.handleClickHelp}>Näytä opaste</button>
-                        {/*<Md5Salaus salattava="pas123!"*/}
+
                         <Viesti />
                         <ViestiPrp viesti="Viesti nro 1" kukkaruukku="Belargonia" autonMalli="V90" />
                         <DigitalWatch />
